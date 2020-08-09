@@ -1,0 +1,21 @@
+note over browser:
+user types note and clicks on save
+from the code the browser received before 
+the event handler handles the event of the new note
+a new note element gets created whith the data (note content and date)
+it gets added to the list of notes
+the notes are redrawn including the new note
+
+sending the JSON-string version of the data and
+the information that the data is JSON-data to the server
+end note
+
+browser->server: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+
+note over server:
+parses new note as json-data
+adds note to list of notes on the server
+tells the browser, that the note was created
+end note
+
+server->browser: status code 201 created ("message": "note created")
