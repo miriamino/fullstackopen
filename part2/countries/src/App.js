@@ -7,23 +7,10 @@ import Weather from './components/Weather'
 
 
 const App = () => {
-  const [countries, setCountries] = useState([])
-  const [inputValue, setInputValue] = useState('')
-  const [filterValue, setFilterValue] = useState('')
-  const [capital, setCapital] = useState('')
-  const [weather, setWeather] = useState([])
-  const api_key = process.env.REACT_APP_API_KEY
-  const weatherUrl = 'http://api.weatherstack.com/current?access_key=' + api_key + '&query='
-  const filteredCountries = countries.filter(country => country.name.toLowerCase().includes(filterValue.toLowerCase()))
+const [countries, setCountries] = useState([])
+const [inputValue, setInputValue] = useState('')
+const [filterValue, setFilterValue] = useState('')
 
-  useEffect(() => {
-    const url = weatherUrl + capital
-    axios
-      .get(url)
-      .then(response => {
-        setWeather(response.data.current)
-      })
-  }, [weatherUrl, capital])
 
 useEffect(() => {
   axios
@@ -32,6 +19,10 @@ useEffect(() => {
       setCountries(response.data)
     })
 }, [])
+
+const filteredCountries  = countries.filter(country => country.name.toLowerCase().includes(filterValue.toLowerCase()))
+
+
 
 const handleChange = (event) => {
   setInputValue(event.target.value)
@@ -44,7 +35,7 @@ const handleClick = (event) => setFilterValue(event.target.value)
     <div>
     <InputForm inputValue={inputValue} handleChange={handleChange} />
       {filteredCountries.map(country => country).length === 1
-      ? <><BasicData countries={filteredCountries} /><Weather weather={weather} capital={capital} /></>
+      ? <><BasicData countries={filteredCountries} /><Weather country={filteredCountries} /></>
       : <Countries countries={filteredCountries} handleClick={handleClick} />
     }
     </div>
