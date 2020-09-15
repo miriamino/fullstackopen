@@ -41,12 +41,11 @@ const App = () => {
                         }, 5000)
                     })
                     .catch(error => {
-                        setNotificationMessage(`Information of "${newName}" has already been removed from server`)
+                        setNotificationMessage(error.response.data.error)
                         setClassName('error')
                         setTimeout(() => {
                             setNotificationMessage(null)
                         }, 5000)
-                        setPersons(persons.filter(p => p.name !== newName))
                     })
 
             }
@@ -67,7 +66,15 @@ const App = () => {
                     setNotificationMessage(null)
                 }, 5000)
                 })
+            .catch(error => {
+                setNotificationMessage(error.response.data.error)
+                setClassName('error')
+                setTimeout(() => {
+                    setNotificationMessage(null)
+                }, 5000)
+            })
     }}
+    
     const removePerson = person => {
         if (window.confirm(`Delete ${person.name}?`)) {
         personService
