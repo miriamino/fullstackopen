@@ -8,9 +8,9 @@ const Part = (props) =>
   <p>{props.part.name} {props.part.exercises}</p>
 
 const Content = (props) =>
-  <ul>
-    {props.parts.map((part) => <li><Part part={part} /></li>)}
-  </ul>
+  <>
+    {props.parts.map((part) => <p><Part part={part} /></p>)}
+  </>
 
 const Total = (props) =>
   <p>Number of exercises {props.parts.reduce((a, b) => a + b.exercises, 0)}</p>
