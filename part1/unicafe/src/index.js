@@ -24,7 +24,7 @@ const Statistics = ({ good, neutral, bad }) => {
   if (all === 0) {
     return (
       <div>
-        no feedback given
+        No feedback given
       </div>
     )
   }
