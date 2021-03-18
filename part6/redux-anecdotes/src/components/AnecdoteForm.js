@@ -4,7 +4,7 @@ import { createAnecdote } from '../reducers/anecdoteReducer'
 
 
 
-const NewAnecdoteForm = () => {
+const AnecdoteForm = () => {
     const dispatch = useDispatch()
     
     const AddAnecdote = (event) => {
@@ -26,4 +26,4 @@ const NewAnecdoteForm = () => {
     )
 }
 
-export default NewAnecdoteForm
+export default AnecdoteForm
