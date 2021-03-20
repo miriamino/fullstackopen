@@ -5,10 +5,11 @@ import { newNotification, removeNotification } from '../reducers/notificationRed
 
 
 
+
 const AnecdoteForm = () => {
     const dispatch = useDispatch()
 
-    const AddAnecdote = (event) => {
+    const AddAnecdote = async (event) => {
         event.preventDefault()
         const content = event.target.anecdote.value
         event.target.anecdote.value = ''
