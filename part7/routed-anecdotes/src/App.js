@@ -7,6 +7,8 @@ import {
   useHistory
 } from 'react-router-dom'
 
+import { useField } from './hooks/index'
+
 const Menu = () => {
   const padding = {
     paddingRight: 5
@@ -70,40 +72,45 @@ const Notification = ({ notification }) => (
 )
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState('')
-  const [author, setAuthor] = useState('')
-  const [info, setInfo] = useState('')
+  const content = useField('content')
+  const author = useField('author')
+  const info = useField('info')
   const history = useHistory()
 
 
   const handleSubmit = (e) => {
     e.preventDefault()
     props.addNew({
-      content,
-      author,
-      info,
+      content: content.value,
+      author: author.value,
+      info: info.value,
       votes: 0
-    })
+    }, props.timeoutID)
     history.push('/')
   }
-
+const handleReset = (e) => {
+  e.preventDefault()
+  content.reset()
+  author.reset()
+  info.reset()
+}
   return (
     <div>
       <h2>create a new anecdote</h2>
       <form onSubmit={handleSubmit}>
         <div>
           content
-          <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+          <input {...content.formElements} />
         </div>
         <div>
           author
-          <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
+          <input {...author.formElements} />
         </div>
         <div>
           url for more info
-          <input name='info' value={info} onChange={(e) => setInfo(e.target.value)} />
+          <input {...info.formElements} />
         </div>
-        <button>create</button>
+        <button>create</button><button onClick={handleReset}>reset</button>
       </form>
     </div>
   )
@@ -159,7 +166,7 @@ const App = () => {
 
   const match = useRouteMatch('/anecdotes/:id')
   const anecdote = match
-    ? anecdotes.find(anecdote => anecdoteById(anecdote.id))
+    ? anecdotes.find(anecdote => Number(anecdote.id) === Number(match.params.id))
     : null
 
   return (
@@ -175,7 +182,7 @@ const App = () => {
           <About />
         </Route>
         <Route path="/create">
-          <CreateNew addNew={addNew} />
+          <CreateNew addNew={addNew} timeoutID={timeoutID} />
         </Route>
         <Route path="/">
           <AnecdoteList anecdotes={anecdotes} />
