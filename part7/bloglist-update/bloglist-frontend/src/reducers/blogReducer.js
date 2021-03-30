@@ -5,16 +5,15 @@ const blogReducer = (state = [], action) => {
     case 'NEW_BLOG':
       return [...state, action.data]
     case 'REMOVE': {
-      const blogToRemove = state.find(a => a.id === action.data.id)
-      const indexToRemove = state.indexOf(blogToRemove)
-      return state.splice(indexToRemove, 1)
+      const id = action.data.id
+      return state.filter(b => b.id !== id)
     }
     case 'LIKE': {
-      const id = action.data.id
+      const id = action.data.data.id
       const blogToChange = state.find(a => a.id === id)
       const changedBlog = {
         ...blogToChange,
-        votes: blogToChange.likes + 1
+        likes: blogToChange.likes + 1
       }
       return state.map(blog =>
         blog.id !== id ? blog : changedBlog
@@ -32,14 +31,14 @@ export const createBlog = (data) => {
     const newBlog = await blogService.create(data)
     dispatch({
       type: 'NEW_BLOG',
-      data: newBlog,
+      data: newBlog
     })
   }
 }
 
-export const remove = (id, object) => {
+export const removeBlog = (id) => {
   return async dispatch => {
-    await blogService.remove(id, object)
+    await blogService.remove(id)
     dispatch({
       type: 'REMOVE',
       data: { id }
@@ -48,12 +47,12 @@ export const remove = (id, object) => {
   }
 }
 
-export const like = (id, object) => {
+export const like = (data) => {
   return async dispatch => {
-    await blogService.update(id, object)
+    await blogService.update(data)
     dispatch({
       type: 'LIKE',
-      data: { id }
+      data: { data }
 
     })
   }

@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react'
 // import BlogList from './components/BlogList'
 // import BlogForm from './components/BlogForm'
-// import Notification from './components/Notification'
-// import Togglable from './components/Togglable'
+import Notification from './components/Notification'
+import Togglable from './components/Togglable'
 import { initializeBlogs } from './reducers/blogReducer'
 import { useDispatch } from 'react-redux'
 import { getUser } from './reducers/userReducer'
 import LoginForm from './components/LoginForm'
 import Logout from './components/Logout'
-
+import BlogForm from './components/BlogForm'
+import BlogList from './components/BlogList'
 
 const App = () => {
 
@@ -141,6 +142,11 @@ const App = () => {
       {/* <Notification /> */}
       <LoginForm />
       <Logout />
+      <Notification />
+      <Togglable buttonLabel='new blog'>
+        <BlogForm />
+      </Togglable>
+      <BlogList />
 
       {/* <BlogList /> */}
     </div>

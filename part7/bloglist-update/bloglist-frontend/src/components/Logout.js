@@ -15,6 +15,7 @@ const Logout = () => {
     <div>
       { user !== null
         ? <div>
+          <h2>blog</h2>
           {user.name} is logged in <button onClick={logOut}>logout</button>
         </div>
         : null

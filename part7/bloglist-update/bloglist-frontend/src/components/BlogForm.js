@@ -1,49 +1,43 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useField } from '../hooks/index'
+import { createBlog } from '../reducers/blogReducer'
 
 
-
-const BlogForm = ({ createBlog, user }) => {
-
-  const [newTitle, setNewTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('')
-  const [newUrl, setNewUrl] = useState('')
-
-  const handleTitleForm = (event) => {
-    setNewTitle(event.target.value)
-  }
-
-  const handleAuthorForm = (event) => {
-    setNewAuthor(event.target.value)
-  }
-
-  const handleUrlForm = (event) => {
-    setNewUrl(event.target.value)
-  }
+const BlogForm = () => {
+  const dispatch = useDispatch()
+  const user = useSelector(state => state.user)
+  const newTitle = useField('text', 'newTitle', 'newtitle')
+  const newAuthor = useField('text', 'newAuthor', 'newauthor')
+  const newUrl = useField('text', 'newUrl', 'newurl')
 
   const addBlog = (event) => {
     event.preventDefault()
-    createBlog({
-      title: newTitle,
-      author: newAuthor,
-      url: newUrl,
+    dispatch(createBlog({
+      title: newTitle.value,
+      author: newAuthor.value,
+      url: newUrl.value,
       user: user.id,
-    })
-    setNewTitle('')
-    setNewAuthor('')
-    setNewUrl('')
+    }))
+    newTitle.reset()
+    newAuthor.reset()
+    newUrl.reset()
   }
 
 
   return (
-    <form onSubmit={addBlog}>
-      <div>
-        <h2>create new</h2>
-      title:<input id='title' value={newTitle} onChange={handleTitleForm} /><br />
-      author:<input id='author' value={newAuthor} onChange={handleAuthorForm} /><br />
-      url:<input id='url' value={newUrl} onChange={handleUrlForm} /><br />
-        <button id='create' type='submit'>create</button>
-      </div>
-    </form>
+    <div> { user !== null
+      ? < form onSubmit={addBlog}>
+        <div>
+          <h2>create new</h2>
+      title:<input {...newTitle.formElements} /><br />
+      author:<input {...newAuthor.formElements} /><br />
+      url:<input {...newUrl.formElements} /><br />
+          <button id='create' type='submit'>create</button>
+        </div>
+      </form>
+      : null}
+    </div >
   )
 }
 

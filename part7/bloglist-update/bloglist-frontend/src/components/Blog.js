@@ -1,7 +1,13 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import { useDispatch, useSelector } from 'react-redux'
+import { removeBlog, like } from '../reducers/blogReducer'
+import { newNotification } from '../reducers/notificationReducer'
 
-const Blog = ({ blog, updateBlog, removeBlog, user, index }) => {
+const Blog = ({ blog, index }) => {
+
+  const user = useSelector(state => state.user)
+  const timerID = useSelector(state => state.notification.timerID)
+  const dispatch = useDispatch()
 
   const blogStyle = {
     paddingTop: 10,
@@ -30,21 +36,21 @@ const Blog = ({ blog, updateBlog, removeBlog, user, index }) => {
       <div style={showWhenVisible} className='detail'>
 
         {blog.url}        <br />
-          likes <span id='likes'>{blog.likes}</span> <button id='likeBtn' onClick={updateBlog}>like</button> <br />
+          likes <span id='likes'>{blog.likes}</span> <button id='likeBtn' onClick={() => {
+          dispatch(like(blog))
+          dispatch(newNotification(`you liked '${blog.title}'`, 'message', 10, timerID))
+        }
+        }>like</button> <br />
         {blog.user.name} <br />
         {user.username === blog.user.username &&
-          <button onClick={removeBlog}>remove</button>
+          <button onClick={() => {
+            dispatch(removeBlog(blog.id))
+            dispatch(newNotification(`you removed '${blog.title}'`, 'message', 10, timerID))
+          }}>remove</button>
         }
       </div>
     </div>
   )
-}
-
-Blog.propTypes = {
-  blog: PropTypes.object.isRequired,
-  updateBlog: PropTypes.func.isRequired,
-  removeBlog: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
 }
 
 export default Blog
