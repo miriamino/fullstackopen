@@ -40,14 +40,19 @@ export const logout = (data) => {
 }
 
 export const getUser = () => {
-  return dispatch => {
-    const user = JSON.parse(window.localStorage.getItem('loggedBlogappUser'))
-    blogService.setToken(user.token)
+  return async dispatch => {
+    const user = await JSON.parse(window.localStorage.getItem('loggedBlogappUser'))
+    {
+      user !== null
+        ? blogService.setToken(user.token)
+        : blogService.setToken(null)
+    }
     dispatch({
       type: 'GET_USER',
       data: user
     })
   }
 }
+
 
 export default userReducer
