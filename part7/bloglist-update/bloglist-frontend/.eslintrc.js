@@ -18,7 +18,7 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
-        "react", "jest", "cypress"
+        "react", "jest", "cypress", "react-hooks"
     ],
     "rules": {
         "indent": [
@@ -26,6 +26,8 @@ module.exports = {
             2,
             { "SwitchCase": 1 }
         ],
+        "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+        "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
         "linebreak-style": [
             "error",
             "unix"

@@ -6,7 +6,7 @@ import { createBlog } from '../reducers/blogReducer'
 
 const BlogForm = () => {
   const dispatch = useDispatch()
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.loggedInUser)
   const newTitle = useField('text', 'newTitle', 'newtitle')
   const newAuthor = useField('text', 'newAuthor', 'newauthor')
   const newUrl = useField('text', 'newUrl', 'newurl')

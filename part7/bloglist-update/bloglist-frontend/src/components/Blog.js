@@ -5,7 +5,7 @@ import { newNotification } from '../reducers/notificationReducer'
 
 const Blog = ({ blog, index }) => {
 
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.loggedInUser)
   const timerID = useSelector(state => state.notification.timerID)
   const dispatch = useDispatch()
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { login } from '../reducers/userReducer'
+import { login } from '../reducers/loginReducer'
 import { useField } from '../hooks/index'
 
 const LoginForm = () => {
@@ -8,7 +8,7 @@ const LoginForm = () => {
   const dispatch = useDispatch()
   const username = useField('text', 'Username', 'username')
   const password = useField('password', 'Password', 'password')
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.loggedInUser)
 
   const loginUser = async (event) => {
     event.preventDefault()
